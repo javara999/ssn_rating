@@ -11,7 +11,7 @@ from html.parser import HTMLParser
 from plugins.metadata.base import BaseMetadataProvider
 
 
-PLUGIN_VERSION = "1.0.0"
+PLUGIN_VERSION = "1.0.1"
 BASE_URL = "https://ssn.so"
 USER_AGENT = "BookOasis-SsnRatingPlugin/1.0"
 BLOCK_START = "<!-- BOOKOASIS_SSN_RATING_START -->"
@@ -126,7 +126,7 @@ class SsnRatingMetadataProvider(BaseMetadataProvider):
     update_manifest = {
         "enabled": True,
         "provider": "github-raw",
-        "raw_base_url": "https://raw.githubusercontent.com/javara999/ssnet_meta/main/ssn_rating",
+        "raw_base_url": "https://raw.githubusercontent.com/javara999/ssn_rating/main",
         "files": ["ssn_rating.py", "__init__.py", "VERSION", "README.md"],
         "version_file": "VERSION",
         "version_key": "plugin version",
