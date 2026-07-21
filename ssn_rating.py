@@ -11,7 +11,7 @@ from html.parser import HTMLParser
 from plugins.metadata.base import BaseMetadataProvider
 
 
-PLUGIN_VERSION = "1.0.2"
+PLUGIN_VERSION = "1.0.3"
 BASE_URL = "https://ssn.so"
 USER_AGENT = "BookOasis-SsnRatingPlugin/1.0"
 BLOCK_START = "<!-- BOOKOASIS_SSN_RATING_START -->"
@@ -354,14 +354,15 @@ class SsnRatingMetadataProvider(BaseMetadataProvider):
         lines = [BLOCK_START, "[소설넷 평점]"]
         count_text = f" ({rating_count:,}명)" if rating_count else ""
         lines.append(f"평균: {rating:g} / 5.0{count_text}")
-        lines.extend(["", cls._review_text("최고 평점 리뷰", highest, limit)])
+        if highest:
+            lines.extend(["", cls._review_text("최고 평점 리뷰", highest, limit)])
         lines.extend(["", f"출처: {BASE_URL}/series/{series_id}/", BLOCK_END])
         return "\n".join(lines)
 
     @classmethod
     def _review_text(cls, label, review, limit):
         if not review:
-            return f"[{label}] 내용이 있는 리뷰 없음"
+            return ""
         rating_data = review.get("reviewRating") or {}
         rating = cls._float(rating_data.get("ratingValue"), 0.0)
         author_data = review.get("author") or {}
