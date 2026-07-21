@@ -11,7 +11,7 @@ from html.parser import HTMLParser
 from plugins.metadata.base import BaseMetadataProvider
 
 
-PLUGIN_VERSION = "1.0.1"
+PLUGIN_VERSION = "1.0.2"
 BASE_URL = "https://ssn.so"
 USER_AGENT = "BookOasis-SsnRatingPlugin/1.0"
 BLOCK_START = "<!-- BOOKOASIS_SSN_RATING_START -->"
@@ -147,7 +147,7 @@ class SsnRatingMetadataProvider(BaseMetadataProvider):
             "type": "number",
             "default": 1000,
             "required": False,
-            "description": "최고·최저 평점 리뷰를 각각 저장할 최대 글자 수입니다.",
+            "description": "최고 평점 리뷰를 저장할 최대 글자 수입니다.",
         },
         {
             "key": "PRESERVE_SUMMARY",
@@ -213,7 +213,7 @@ class SsnRatingMetadataProvider(BaseMetadataProvider):
                     "publisher": "소설넷",
                     "pubDate": "",
                     "cover": item.get("cover") or "",
-                    "description": f"소설넷 평점 {rating_text}{count_text} · 적용 시 최고/최저 평점 리뷰를 함께 저장합니다.",
+                    "description": f"소설넷 평점 {rating_text}{count_text} · 적용 시 최고 평점 리뷰를 함께 저장합니다.",
                     "link": item.get("link") or f"{BASE_URL}/series/{series_id}/",
                     "score": self._score_100(rating),
                     "ssn_id": series_id,
@@ -241,12 +241,11 @@ class SsnRatingMetadataProvider(BaseMetadataProvider):
         cfg = self._config(db_type)
         try:
             highest = self._fetch_detail(series_id, "-rating", cfg)
-            lowest = self._fetch_detail(series_id, "rating", cfg)
         except Exception as exc:
             print(f"[SsnRatingMetadataProvider] detail fetch failed: {exc}")
             return False, f"소설넷 상세정보 조회 실패: {exc}"
 
-        aggregate = highest.get("aggregate") or lowest.get("aggregate") or {}
+        aggregate = highest.get("aggregate") or {}
         rating = self._float(aggregate.get("ratingValue"), self._float(item_data.get("ssn_rating"), 0.0))
         rating_count = self._int_value(aggregate.get("ratingCount"), self._int_value(item_data.get("ssn_rating_count"), 0))
         if rating <= 0:
@@ -258,7 +257,6 @@ class SsnRatingMetadataProvider(BaseMetadataProvider):
             rating,
             rating_count,
             highest.get("review"),
-            lowest.get("review"),
             review_limit,
         )
         old_summary = self._remove_existing_block(book["summary"] or "")
@@ -279,7 +277,7 @@ class SsnRatingMetadataProvider(BaseMetadataProvider):
             return False, f"DB 업데이트 오류: {exc}"
         if count != 1:
             return False, "평점 적용 중 대상 도서가 변경되었습니다."
-        return True, f"소설넷 평점 {rating:g}/5.0과 최고·최저 평점 리뷰를 적용했습니다."
+        return True, f"소설넷 평점 {rating:g}/5.0과 최고 평점 리뷰를 적용했습니다."
 
     def _fetch_detail(self, series_id, order, cfg):
         query = urllib.parse.urlencode({"filter": "rating", "order_by": order})
@@ -352,12 +350,11 @@ class SsnRatingMetadataProvider(BaseMetadataProvider):
         return visit(documents)
 
     @classmethod
-    def _build_summary_block(cls, series_id, rating, rating_count, highest, lowest, limit):
+    def _build_summary_block(cls, series_id, rating, rating_count, highest, limit):
         lines = [BLOCK_START, "[소설넷 평점]"]
         count_text = f" ({rating_count:,}명)" if rating_count else ""
         lines.append(f"평균: {rating:g} / 5.0{count_text}")
         lines.extend(["", cls._review_text("최고 평점 리뷰", highest, limit)])
-        lines.extend(["", cls._review_text("최저 평점 리뷰", lowest, limit)])
         lines.extend(["", f"출처: {BASE_URL}/series/{series_id}/", BLOCK_END])
         return "\n".join(lines)
 
