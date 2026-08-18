@@ -1,0 +1,42 @@
+<div class="bo-settings-panel">
+  <div class="bo-settings-title">소설넷 평점 설정</div>
+  <div class="bo-settings-desc">필요한 경우에만 설정을 펼쳐 검색과 메타데이터 적용 옵션을 변경합니다.</div>
+  <details class="bo-settings-section">
+    <summary>설정 펼치기</summary>
+    <div class="bo-settings-body">
+      <div class="bo-settings-field">
+        <label for="ssn-max-results">최대 검색 결과</label>
+        <div class="bo-input-container">
+          <input id="ssn-max-results" type="number" name="MAX_RESULTS" value="10" min="1" max="50">
+          <p class="hint">검색 결과에 표시할 최대 작품 수입니다.</p>
+        </div>
+      </div>
+      <div class="bo-settings-field">
+        <label for="ssn-review-max-length">리뷰 최대 글자 수</label>
+        <div class="bo-input-container">
+          <input id="ssn-review-max-length" type="number" name="REVIEW_MAX_LENGTH" value="1000" min="100" max="10000">
+          <p class="hint">최고 평점 리뷰를 저장할 최대 글자 수입니다.</p>
+        </div>
+      </div>
+      <div class="bo-settings-field bo-checkbox-field">
+        <label for="ssn-preserve-summary">기존 작품 설명 보존</label>
+        <div class="bo-input-container">
+          <input id="ssn-preserve-summary" type="checkbox" name="PRESERVE_SUMMARY" checked>
+          <p class="hint">기존 설명 뒤에 소설넷 평점 블록을 추가합니다.</p>
+        </div>
+      </div>
+      <div class="bo-settings-field">
+        <label for="ssn-timeout">요청 제한 시간(초)</label>
+        <div class="bo-input-container">
+          <input id="ssn-timeout" type="number" name="TIMEOUT" value="15" min="1" max="120">
+        </div>
+      </div>
+      <div class="bo-settings-field">
+        <label for="ssn-cache-ttl">캐시 유지 시간(초)</label>
+        <div class="bo-input-container">
+          <input id="ssn-cache-ttl" type="number" name="CACHE_TTL" value="600" min="0" max="86400">
+        </div>
+      </div>
+    </div>
+  </details>
+</div>

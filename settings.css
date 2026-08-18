@@ -1,0 +1,18 @@
+.bo-settings-panel { padding: 0.4rem 0.2rem; }
+.bo-settings-title { color: #f1f5f9; font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+.bo-settings-desc { color: #94a3b8; font-size: 0.82rem; line-height: 1.4; margin-bottom: 0.9rem; }
+.bo-settings-section { background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 0.2rem 0.9rem; }
+.bo-settings-section summary { align-items: center; color: #e2e8f0; cursor: pointer; display: flex; font-size: 0.88rem; font-weight: 700; gap: 0.4rem; list-style: none; padding: 0.7rem 0; user-select: none; }
+.bo-settings-section summary::-webkit-details-marker { display: none; }
+.bo-settings-section summary::before { color: #94a3b8; content: ">"; font-size: 0.7rem; transition: transform 0.15s ease; }
+.bo-settings-section[open] summary::before { transform: rotate(90deg); }
+.bo-settings-section[open] summary { border-bottom: 1px solid rgba(255,255,255,0.1); }
+.bo-settings-body { padding: 0.9rem 0 0.6rem; }
+.bo-settings-field { align-items: flex-start; display: flex; gap: 2rem; margin-bottom: 1rem; }
+.bo-settings-field > label { color: #e2e8f0; flex-shrink: 0; font-size: 0.86rem; font-weight: 700; padding-top: 0.6rem; width: 210px; }
+.bo-input-container { display: flex; flex: 1; flex-direction: column; gap: 0.4rem; max-width: 560px; min-width: 250px; }
+.bo-settings-field input[type="number"] { background: rgba(15,23,42,0.75); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; box-sizing: border-box; color: #fff; font-size: 0.85rem; outline: none; padding: 0.6rem 0.8rem; width: 100%; }
+.bo-settings-field input[type="checkbox"] { height: 18px; margin: 0.55rem 0 0; width: 18px; }
+.bo-settings-field input:focus { border-color: rgba(139,92,246,0.6); box-shadow: 0 0 0 2px rgba(139,92,246,0.15); }
+.bo-settings-field .hint { color: #94a3b8; font-size: 0.76rem; line-height: 1.4; margin: 0; }
+@media (max-width: 600px) { .bo-settings-field { flex-direction: column; gap: 0.5rem; } .bo-settings-field > label { padding-top: 0; width: 100%; } .bo-input-container { max-width: 100%; min-width: 0; width: 100%; } .bo-settings-field input[type="checkbox"] { margin-top: 0; } }
