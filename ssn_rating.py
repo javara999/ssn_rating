@@ -11,7 +11,7 @@ from html.parser import HTMLParser
 from plugins.metadata.base import BaseMetadataProvider
 
 
-PLUGIN_VERSION = "1.0.5"
+PLUGIN_VERSION = "1.0.6"
 BASE_URL = "https://ssn.so"
 USER_AGENT = "BookOasis-SsnRatingPlugin/1.0"
 BLOCK_START = "<!-- BOOKOASIS_SSN_RATING_START -->"
